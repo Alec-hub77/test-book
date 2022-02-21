@@ -11,15 +11,55 @@
     flex-direction: column;
     margin: 10px 0;
   }
+  label {
+    margin: 0 10px;
+    font-weight: 600;
+    color: #808080;
+  }
+  input {
+    padding: 15px;
+    margin: 10px;
+    outline: none;
 
+    &:focus {
+      border-color: #3e99fa;
+      box-shadow: 0 0 10px #3e99fa;
+      border-radius: 3px;
+    }
+  }
+
+  .errorMsg {
+    font-size: 12px;
+    color: #ff0000;
+    display: none;
+    padding: 3px;
+    display: none;
+    margin: 0 10px;
+  }
+  button {
+    margin: 10px;
+    padding: 15px;
+    margin-top: 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3e99fa;
+    box-shadow: 0 0 20px #3e99fa;
+    cursor: pointer;
+    font-weight: 600;
+    color: #fff;
+
+    &:hover {
+      background: darken(#3e99fa, 10);
+    }
+  }
+  
   .select {
     display: flex;
     flex-direction: column;
-    
-    
+
     select {
-        padding: 15px;
-        margin: 10px;
+      padding: 15px;
+      margin: 10px;
     }
 
     span {
@@ -28,21 +68,13 @@
       color: #808080;
     }
   }
+}
+input:invalid[data-focused="true"] {
+  border-color: red;
+  border-radius: 3px;
+  box-shadow: 0 0 10px red;
+}
 
-  button {
-      margin: 10px;
-      padding: 15px;
-      margin-top: 30px;
-      border: none;
-      border-radius: 5px;
-      background-color: #3e99fa;
-      box-shadow: 0 0 20px #3e99fa;
-      cursor: pointer;
-      font-weight: 600;
-      color: #fff;
-
-      &:hover {
-          background: darken(#3e99fa, 10)
-      }
-  }
+input:invalid[data-focused="true"] ~ span {
+  display: block;
 }

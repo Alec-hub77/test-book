@@ -1,11 +1,11 @@
 import React, { useReducer } from "react";
-import { FormInput } from "../../components/FormInput/FormInput";
 import { idGenerate } from "../../helpers/idGenerator";
 import styles from "./AddBook.module.scss";
 import { inputs } from "../../constants/inputs";
 import { ADD_BOOK } from "../../types/types";
 import { useNavigate } from "react-router-dom";
-import { Inputs } from "../../components/Inputs/Inputs";
+
+
 
 interface IValues {
   id: string;
@@ -16,6 +16,7 @@ interface IValues {
 }
 
 export const AddBook = () => {
+  const [focused, setFocused] = React.useState<string | boolean>(false);
   const [values, setValues] = React.useState<IValues>({
     id: idGenerate(),
     title: "",
@@ -23,10 +24,13 @@ export const AddBook = () => {
     isbn: null,
     category: "horror",
   });
-
-
-
   const navigate = useNavigate();
+
+
+  const handleFocused = (e: React.FocusEvent<HTMLInputElement>) => {
+    setFocused(true);
+  };
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -40,34 +44,42 @@ export const AddBook = () => {
     });
   };
 
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   dispatch({
-  //     type: ADD_BOOK,
-  //     payload: values,
-  //   });
-  //   navigate("/");
-  // };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    navigate("/");
+  };
 
   return (
-    // <div className={styles.container}>
-    //   <form onSubmit={handleSubmit}>
-    //     {inputs.map((input) => (
-    //       <FormInput key={input.id} {...input} handleChange={handleChange} />
-    //     ))}
-    //     <div className={styles.select}>
-    //       <span>Set Category*</span>
-    //       <select onChange={selectChange}>
-    //         <option value="Horror">Horror</option>
-    //         <option value="Fantasy">Fantasy</option>
-    //         <option value="Detective">Detective</option>
-    //         <option value="Science fiction">Science fiction</option>
-    //       </select>
-    //     </div>
-    //     <button>Add a Book</button>
-    //   </form>
-    // </div>
-    <Inputs />
+    <div className={styles.container}>
+      <form onSubmit={handleSubmit}>
+        {inputs.map((input) => (
+          <>
+            <label htmlFor="">{input.label}</label>
+            <input
+              key={input.id}
+              placeholder={input.placeholder}
+              type={input.type}
+              name={input.name}
+              required={input.required}
+              onChange={handleChange}
+              onBlur={handleFocused}
+              data-focused={focused.toString()}
+            />
+            <span className={styles.errorMsg}>{input.errorMsg}</span>
+          </>
+        ))}
+        <div className={styles.select}>
+          <span>Set Category*</span>
+          <select onChange={selectChange}>
+            <option value="Horror">Horror</option>
+            <option value="Fantasy">Fantasy</option>
+            <option value="Detective">Detective</option>
+            <option value="Science fiction">Science fiction</option>
+          </select>
+        </div>
+        <button>Add a Book</button>
+      </form>
+    </div>
   );
 };
 
