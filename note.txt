@@ -1,0 +1,85 @@
+import { createContext, ReactNode, useEffect, useReducer } from "react";
+import { BooksAction, GET_BOOKS, IBook, IBookState } from "../types/types";
+import { bookReducer, initialState } from "./bookReducer";
+
+interface BookProviderProps {
+  children: ReactNode;
+}
+interface IBookContex {
+  state: IBookState | null;
+  dispatch: React.Dispatch<BooksAction>;
+}
+
+export const BookContext = createContext<IBookContex | null>({ initialState });
+
+export const BookProvider = ({ children }: BookProviderProps) => {
+  const [state, dispatch] = useReducer(bookReducer, initialState);
+
+  const getBooks = async () => {
+    try {
+      const res = await fetch("http://localhost:3001/books");
+      const resData: IBook = await res.json();
+      dispatch({
+        type: GET_BOOKS,
+        payload: resData,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const addBook = () => {};
+
+  return (
+    <BookContext.Provider value={{ state, dispatch }}>
+      {children}
+    </BookContext.Provider>
+  );
+};
+
+
+
+*********************************************************************************
+
+import { IBook } from './../types/types';
+import {
+  GET_BOOKS,
+  IBookState,
+  BooksAction,
+  DELETE_BOOK,
+  ADD_BOOK
+} from "../types/types";
+
+export const initialState: IBookState = {
+  books: null,
+};
+
+const addBook = (book: IBook, state: IBookState) => {
+  const newBook = [...state.books!, book]
+  return {
+    ...state, books: newBook
+  }
+}
+
+export const bookReducer = (state = initialState, action: BooksAction): IBookState => {
+  switch (action.type) {
+    case GET_BOOKS:
+      return {
+        books: action.payload
+      };
+    case ADD_BOOK:
+      return addBook(action.payload, state)
+      // return {
+      //   ...state, state.books: [...state.books, action.payload]
+      
+      // }
+    // case DELETE_BOOK:
+    //   return {
+    //     ...state,
+    //     books: state.books.filter(book => book.id != action.payload.id),
+    //   }
+    default:
+      return state;
+  }
+};
+

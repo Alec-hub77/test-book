@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense } from "react";
+import "./App.scss";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
+import { Dashboard, EditBook, AddBook } from "./pages";
+import { Header } from "./components";
+import { Input } from "./components/Input/Input";
 
-function App() {
+
+const App: React.FC = () => {
+
+  React.useEffect(() => {
+    
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Header />
+      <Suspense fallback={<CircularProgress />}>
+        <Routes>
+          <Route path="/" element={<Dashboard/>} />
+          <Route path="/edit/:id" element={<EditBook/>} />
+          <Route path="/add-book" element={<AddBook/>} />
+          <Route path="/input" element={<Input/>} />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
   );
-}
-
+};
 export default App;

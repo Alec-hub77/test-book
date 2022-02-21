@@ -1,0 +1,48 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  margin-top: 150px;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+  }
+
+  .select {
+    display: flex;
+    flex-direction: column;
+    
+    
+    select {
+        padding: 15px;
+        margin: 10px;
+    }
+
+    span {
+      margin: 0 10px;
+      font-weight: 600;
+      color: #808080;
+    }
+  }
+
+  button {
+      margin: 10px;
+      padding: 15px;
+      margin-top: 30px;
+      border: none;
+      border-radius: 5px;
+      background-color: #3e99fa;
+      box-shadow: 0 0 20px #3e99fa;
+      cursor: pointer;
+      font-weight: 600;
+      color: #fff;
+
+      &:hover {
+          background: darken(#3e99fa, 10)
+      }
+  }
+}

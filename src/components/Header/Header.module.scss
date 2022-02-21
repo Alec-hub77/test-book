@@ -1,0 +1,43 @@
+.header {
+  width: 100vw;
+  height: 70px;
+  background-color: var(--primary);
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 90%;
+  padding: 0 20px;
+}
+
+.logo {
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.link {
+  color: #fff;
+
+  a {
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      background-color: #fff;
+      height: 3px;
+      width: 0;
+      bottom: -5px;
+      left: 0;
+      transition: 0.3s;
+    }
+    &:hover::after {
+      width: 100%;
+    }
+  }
+}
